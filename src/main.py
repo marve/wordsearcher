@@ -1,4 +1,6 @@
-from ast import Or
+"""
+Python module that implements a word search generator
+"""
 from grid import Grid
 from orientation import Orientation
 from word import Word
@@ -13,7 +15,17 @@ words = [
     Word("blighted", Orientation.ACROSS, False),
     Word("egotistical", Orientation.UP, True),
     Word("distopian", Orientation.ACROSS),
-    Word("elliptical", Orientation.DIAG, True)
+    Word("elliptical", Orientation.DIAG, True),
+    Word("hypnotic", Orientation.DIAG),
+    Word("couch", Orientation.ACROSS),
+    Word("obtuse", Orientation.UP, True),
+    Word("rectangular", Orientation.UP),
+    Word("hangar", Orientation.ACROSS, True),
+    Word("bleached", Orientation.UP),
+    Word("familial", Orientation.DIAG),
+    Word("recognition", Orientation.ACROSS),
+    Word("fleeced", Orientation.DIAG, True),
+    Word("earring", Orientation.UP)
 ]
 
 grid = Grid()
