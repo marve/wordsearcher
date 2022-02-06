@@ -4,6 +4,7 @@ Python module that implements a word search generator
 from grid import Grid
 from orientation import Orientation
 from word import Word
+from pdf_renderer import PdfRenderer
 
 words = [
     Word("fancy", Orientation.ACROSS),
@@ -32,4 +33,5 @@ grid = Grid()
 for word in words:
     grid.add(word)
 grid.fill()
-print(grid)
+renderer = PdfRenderer()
+renderer.render(grid, 'word-search.pdf')

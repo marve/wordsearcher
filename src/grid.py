@@ -12,6 +12,15 @@ SIZE: Final = 20
 class Grid:
     def __init__(self):
         self._arry: list[list[str]] = [[None for y in range(SIZE)] for x in range(SIZE)]
+        self._words: list[Word] = []
+
+    @property
+    def words(self):
+        return self._words.copy()
+
+    @property
+    def arry(self):
+        return self._arry.copy()
 
     def add(self, word: Word):
         def rotate_grid():
@@ -38,6 +47,7 @@ class Grid:
         for i, coords in enumerate(chosen):
             x, y = coords
             self._arry[x][y] = word.rendered[i]
+        self._words.append(word)
 
     def fill(self):
         for x in range(SIZE):
