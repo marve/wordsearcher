@@ -30,3 +30,6 @@ class Word:
     def rendered(self):
         """Word in direction order (i.e., reversed if so configured)"""
         return self.text[::-1 if self.reverse else 1]
+
+    def __str__(self):
+        return f'text={self.text} orientation={self.orientation} reverse={self.reverse}' 

@@ -10,7 +10,8 @@ from word import Word
 SIZE: Final = 20
 
 class Grid:
-    def __init__(self):
+    def __init__(self, title: str):
+        self.title = title
         self._arry: list[list[str]] = [[None for y in range(SIZE)] for x in range(SIZE)]
         self._words: list[Word] = []
 
@@ -52,7 +53,8 @@ class Grid:
     def fill(self):
         for x in range(SIZE):
             for y in range(SIZE):
-                self._arry[x][y] = random.choice(string.ascii_lowercase) if not self._arry[x][y] else self._arry[x][y]
+                if not self._arry[x][y]:
+                    self._arry[x][y] = random.choice(string.ascii_lowercase)
 
     def __str__(self):
-        return '\n'.join([str(row) for row in self._arry])
+        return '\n'.join([str([i if i else ' ' for i in row]) for row in self._arry])
