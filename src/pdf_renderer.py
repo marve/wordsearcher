@@ -13,9 +13,11 @@ class PdfRenderer:
         pdf.add_page()
         font_path = '/workspaces/wordsearcher/fonts/roboto_mono/RobotoMono-VariableFont_wght.ttf'
         pdf.add_font('Roboto Mono', '', font_path, uni = True)
+        pdf.set_font('Roboto Mono', '', 20)
+        pdf.cell(w = 0, h = 10, txt = grid.title, align = 'C')
         pdf.set_font('Roboto Mono', '', 16)
-        top_gap = 11.5
-        left_gap = 30
+        top_gap = 31.5
+        left_gap = 35
         row_height = 7.0
         cell_width = row_height
 
@@ -23,11 +25,11 @@ class PdfRenderer:
             pdf.set_xy(x = left_gap, y = (row_height * i) + top_gap)
             for char in row:
                 pdf.cell(w = cell_width, h = row_height, txt = char.upper(), align = 'C')
-        pdf.rect(x = left_gap, y = 10, w = 141, h = 142.5, style = 'D')
+        pdf.rect(x = left_gap, y = 30, w = 141, h = 142.5, style = 'D')
 
         pdf.set_font('Roboto Mono', '', 14)
         num_cols = 4
-        top_gap = 162.5
+        top_gap = 182.5
         left_gap = 10
         row_height = 6
         cell_width = 50
