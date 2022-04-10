@@ -45,7 +45,7 @@ class GridBuilder:
             print('Nah, that word is too short. Come up with a word that is at least 2 characters')
             return False
         if len(word) > MAX_WORD_LENGTH:
-            print(f'Wow that word is a doozy. Pick one that is no more than {MAX_WORD_LENGTH}')
+            print(f'Wow that word is a doozy! Choose one that is no more than {MAX_WORD_LENGTH} characters')
             return False
         return True
 
