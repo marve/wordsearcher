@@ -10,6 +10,7 @@ from word import Word
 SIZE: Final = 20
 
 class Grid:
+    """Class that represents a word search grid"""
     def __init__(self, title: str):
         self.title = title
         self._arry: list[list[str]] = [[None for y in range(SIZE)] for x in range(SIZE)]
@@ -17,16 +18,22 @@ class Grid:
 
     @property
     def words(self):
+        """A copy of the words in the grid"""
         return self._words.copy()
 
     @property
     def arry(self):
+        """A copy of the underlying grid representation"""
         return self._arry.copy()
 
     def add(self, word: Word):
+        """Adds a word to an open location on the word search grid"""
+        # pylint: disable=invalid-name
+        # pylint: disable=line-too-long
         def rotate_grid():
             if word.orientation == Orientation.ACROSS:
-                return [[(val, x, y) for y, val in enumerate(row)] for x, row in enumerate(self._arry)]
+                return [[(val, x, y) for y, val in enumerate(row)]
+                        for x, row in enumerate(self._arry)]
             if word.orientation == Orientation.UP:
                 return [[(self._arry[x][y], x, y) for x in range(SIZE) for y in range(SIZE)][i::SIZE] for i in range(SIZE)]
             return [[(self._arry[x+i][y+i], x+i, y+i) for i in range(SIZE) if x+i < SIZE and y+i < SIZE] for x in range(SIZE) for y in range(SIZE)]
@@ -51,6 +58,8 @@ class Grid:
         self._words.append(word)
 
     def fill(self):
+        """Fills empty spaces in the grid with random characters"""
+        # pylint: disable=invalid-name
         for x in range(SIZE):
             for y in range(SIZE):
                 if not self._arry[x][y]:

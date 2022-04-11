@@ -1,6 +1,4 @@
-"""
-This module houses the Word class
-"""
+"""This module houses the Word class"""
 from dataclasses import dataclass
 from orientation import Orientation
 
