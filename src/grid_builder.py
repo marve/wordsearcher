@@ -32,13 +32,19 @@ class GridBuilder:
             grid = Grid('Random Adventure')
             word_choices = choices(all_words, k=20)
             for word in word_choices:
-                orientation = choices(
-                    [Orientation.ACROSS, Orientation.DIAG, Orientation.UP],
-                    k=1)[0]
-                reverse = choices([True, False], k=1)[0]
+                orientation = self.get_random_orientation()
+                reverse = self.get_random_reverse()
                 grid.add(Word(word, orientation, reverse))
         grid.fill()
         return grid
+
+    def get_random_orientation(self):
+        """Get a random orientation value"""
+        return choices([Orientation.ACROSS, Orientation.DIAG, Orientation.UP], k=1)[0]
+
+    def get_random_reverse(self):
+        """Get a random reverse value"""
+        return choices([True, False], k=1)[0]
 
     def validate(self, word):
         """Returns true if the word is valid, false otherwise"""
@@ -75,6 +81,8 @@ class GridBuilder:
                     return Orientation.UP
                 case 'd':
                     return Orientation.DIAG
+                case '':
+                    return self.get_random_orientation()
             continue
 
     def get_direction(self):
@@ -83,8 +91,8 @@ class GridBuilder:
             match input('Reverse - [N]o, [Y]es:').lower()[:1]:
                 case 'n':
                     return False
-                case '':
-                    return False
                 case 'y':
                     return True
+                case '':
+                    return self.get_random_reverse()
             continue
