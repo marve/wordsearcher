@@ -1,14 +1,11 @@
-"""
-This module houses the PdfRenderer class
-"""
+"""This module houses the PdfRenderer class"""
 from fpdf import FPDF
 from grid import Grid
 
-"""
-Renders a word search grid in PDF format
-"""
 class PdfRenderer:
+    """Renders a word search grid in PDF format"""
     def render(self, grid: Grid, path: str):
+        """Renders the word search as a PDF and writes to the given location"""
         pdf = FPDF()
         pdf.add_page()
         font_path = '/workspaces/wordsearcher/fonts/roboto_mono/RobotoMono-VariableFont_wght.ttf'
