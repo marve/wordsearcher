@@ -1,7 +1,5 @@
-"""
-Python module that implements a word search generator
-"""
-from GridBuilder import GridBuilder
+""" Python module that implements a word search generator """
+from grid_builder import GridBuilder
 from pdf_renderer import PdfRenderer
 
 print('Word Search Generator')
