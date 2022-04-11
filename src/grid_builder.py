@@ -1,6 +1,4 @@
-"""
-This module houses the GridGenerator
-"""
+""" This module houses the GridGenerator """
 import json
 import os
 from random import choices
@@ -12,7 +10,10 @@ from word import Word
 MAX_WORD_LENGTH = 15
 
 class GridBuilder:
+    """Class that can build a word search grid"""
     def get_grid(self):
+        """Returns a word search grid"""
+        # pylint: disable=line-too-long
         generate_grid = self.get_generate_choice()
         if not generate_grid:
             title = input('Title: ')
@@ -27,29 +28,33 @@ class GridBuilder:
         else:
             word_dict = f'{os.path.dirname(__file__)}/../words_dictionary.json'
             with open(word_dict, 'r', encoding='utf8') as word_file:
-                all_words = [k for k, v in json.load(word_file).items() if len(k) <= MAX_WORD_LENGTH]
+                all_words = [k for k, _ in json.load(word_file).items() if len(k) <= MAX_WORD_LENGTH]
             grid = Grid('Random Adventure')
             word_choices = choices(all_words, k=20)
             for word in word_choices:
-                orientation = choices([Orientation.ACROSS, Orientation.DIAG, Orientation.UP], k=1)[0]
+                orientation = choices(
+                    [Orientation.ACROSS, Orientation.DIAG, Orientation.UP],
+                    k=1)[0]
                 reverse = choices([True, False], k=1)[0]
                 grid.add(Word(word, orientation, reverse))
         grid.fill()
         return grid
 
     def validate(self, word):
+        """Returns true if the word is valid, false otherwise"""
         if [c for c in word.lower() if not ascii_lowercase.__contains__(c)]:
-            print('Yikes, that does not seem like a word. Try again!')
+            print('Yikes! That does not seem like a word. Try again!')
             return False
         if len(word) < 2:
-            print('Nah, that word is too short. Come up with a word that is at least 2 characters')
+            print('Nah. That word is too short. Choose a word at least 2 characters in length')
             return False
         if len(word) > MAX_WORD_LENGTH:
-            print(f'Wow that word is a doozy! Choose one that is no more than {MAX_WORD_LENGTH} characters')
+            print(f'What a doozy! Choose one less than {MAX_WORD_LENGTH + 1} characters')
             return False
         return True
 
     def get_generate_choice(self):
+        """Returns the user choice for grid building strategy"""
         while True:
             match input('Generate [r]andom grid or [e]nter custom words? ').lower()[:1]:
                 case 'e':
@@ -61,6 +66,7 @@ class GridBuilder:
                     continue
 
     def get_orientation(self):
+        """Returns the user choice for word orientation"""
         while True:
             match input('Orientation - [A]cross, [U]p, [D]iagonal: ').lower()[:1]:
                 case 'a':
@@ -72,6 +78,7 @@ class GridBuilder:
             continue
 
     def get_direction(self):
+        """Returns the user choice for word direction"""
         while True:
             match input('Reverse - [N]o, [Y]es:').lower()[:1]:
                 case 'n':
