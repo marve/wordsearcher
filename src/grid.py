@@ -4,6 +4,7 @@ This module houses the Grid class
 import random
 import string
 from typing import Final, Tuple
+from fit_error import FitError
 from orientation import Orientation
 from word import Word
 
@@ -52,10 +53,10 @@ class Grid:
                         if len([val for i, val in enumerate(vals) if not val[0] or word.rendered[i] == val[0]]) == word.length:
                             yield [(val[1], val[2]) for val in vals]
         if word.length > self.size:
-            raise ValueError
+            raise FitError
         possibilities = list(get_possible_positions(rotate_grid()))
         if not possibilities:
-            raise ValueError
+            raise FitError
         chosen = random.choice(list(possibilities))
         for i, coords in enumerate(chosen):
             x, y = coords

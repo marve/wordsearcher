@@ -6,4 +6,6 @@ print('Word Search Generator')
 builder = GridBuilder()
 grid = builder.get_grid()
 renderer = PdfRenderer()
-renderer.render(grid, 'word-search.pdf')
+FILE = 'word-search.pdf'
+print(f'Writing grid as {FILE}')
+renderer.render(grid, FILE)
