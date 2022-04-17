@@ -3,11 +3,13 @@ import json
 import os
 from random import choices
 from string import ascii_lowercase
+from fit_error import FitError
 from grid import Grid
 from orientation import Orientation
 from word import Word
 
 MAX_WORD_LENGTH = 15
+WORD_COUNT = 20
 
 class GridBuilder:
     """Class that can build a word search grid"""
@@ -18,23 +20,35 @@ class GridBuilder:
         if not generate_grid:
             title = input('Title: ')
             grid = Grid(title)
-            for i in range(20):
+            for i in range(WORD_COUNT):
                 while True:
                     word = input(f'Word {i+1}: ')
                     if not self.validate(word):
                         continue
-                    break
-                grid.add(Word(word, self.get_orientation(), self.get_direction()))
+                    try:
+                        grid.add(Word(word, self.get_orientation(), self.get_direction()))
+                        break
+                    except FitError:
+                        print('Try another word or orientation')
+                        continue
         else:
             word_dict = f'{os.path.dirname(__file__)}/../words_dictionary.json'
             with open(word_dict, 'r', encoding='utf8') as word_file:
                 all_words = [k for k, _ in json.load(word_file).items() if len(k) <= MAX_WORD_LENGTH]
             grid = Grid('Random Adventure')
-            word_choices = choices(all_words, k=20)
+            word_choices = choices(all_words, k=100)
             for word in word_choices:
                 orientation = self.get_random_orientation()
                 reverse = self.get_random_reverse()
-                grid.add(Word(word, orientation, reverse))
+                try:
+                    self.add_word(grid, Word(word, orientation, reverse))
+                except FitError:
+                    print('Trying a different word')
+                if len(grid.words) >= WORD_COUNT:
+                    break
+        if len(grid.words) != WORD_COUNT:
+            print(f'ERROR: Expected {WORD_COUNT} words in grid but actually have {len(grid.words)}')
+            raise ValueError
         grid.fill()
         return grid
 
@@ -96,3 +110,12 @@ class GridBuilder:
                 case '':
                     return self.get_random_reverse()
             continue
+
+    def add_word(self, grid, word):
+        """Adds the word to the grid if possible"""
+        try:
+            grid.add(word)
+        except FitError:
+            print(f'WARNING: Could not add {word}')
+            print(grid)
+            raise

@@ -30,4 +30,5 @@ class Word:
         return self.text[::-1 if self.reverse else 1]
 
     def __str__(self):
-        return f'text={self.text} orientation={self.orientation} reverse={self.reverse}' 
+        # pylint: disable=line-too-long
+        return f'text={self.text} length={len(self.text)} orientation={self.orientation.name} reverse={self.reverse}' 
