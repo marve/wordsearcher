@@ -1,5 +1,6 @@
 """Tests for grid module"""
 import unittest
+from dupe_error import DupeError
 from fit_error import FitError
 
 from grid import Grid
@@ -25,6 +26,27 @@ class GridTests(unittest.TestCase):
     def test_diag_word_too_long(self):
         with self.assertRaises(FitError):
             self.grid.add(Word('barf', Orientation.DIAG))
+
+    def test_no_dupe_words(self):
+        text = 'bar'
+        self.grid.add(Word(text, Orientation.UP, reverse=True))
+        with self.assertRaises(DupeError):
+            self.grid.add(Word(text, Orientation.UP, reverse=True))
+        with self.assertRaises(DupeError):
+            self.grid.add(Word(text, Orientation.UP))
+        with self.assertRaises(DupeError):
+            self.grid.add(Word(text, Orientation.ACROSS))
+        with self.assertRaises(DupeError):
+            self.grid.add(Word(text, Orientation.DIAG))
+        with self.assertRaises(DupeError):
+            self.grid.add(Word(text.upper(), Orientation.DIAG))
+
+    def test_no_room_for_word(self):
+        self.grid.add(Word('bar', Orientation.ACROSS))
+        self.grid.add(Word('baz', Orientation.ACROSS))
+        self.grid.add(Word('fad', Orientation.ACROSS))
+        with self.assertRaises(FitError):
+            self.grid.add(Word('rad', Orientation.ACROSS))
 
     def test_across_word_one_char_less_than_max(self):
         self.grid.add(Word('ba', Orientation.ACROSS))

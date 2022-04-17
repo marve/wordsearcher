@@ -3,6 +3,7 @@ import json
 import os
 from random import choices
 from string import ascii_lowercase
+from dupe_error import DupeError
 from fit_error import FitError
 from grid import Grid
 from orientation import Orientation
@@ -30,6 +31,9 @@ class GridBuilder:
                         break
                     except FitError:
                         print('Try another word or orientation')
+                        continue
+                    except DupeError:
+                        print(f'Choose a different word since "{word}" is already in the grid')
                         continue
         else:
             word_dict = f'{os.path.dirname(__file__)}/../words_dictionary.json'
