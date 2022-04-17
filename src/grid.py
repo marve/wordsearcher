@@ -7,13 +7,14 @@ from typing import Final, Tuple
 from orientation import Orientation
 from word import Word
 
-SIZE: Final = 20
+DEFAULT_SIZE: Final = 20
 
 class Grid:
     """Class that represents a word search grid"""
-    def __init__(self, title: str):
+    def __init__(self, title: str, size: int = DEFAULT_SIZE):
         self.title = title
-        self._arry: list[list[str]] = [[None for y in range(SIZE)] for x in range(SIZE)]
+        self.size = size
+        self._arry: list[list[str]] = [[None for y in range(size)] for x in range(size)]
         self._words: list[Word] = []
 
     @property
@@ -35,18 +36,18 @@ class Grid:
                 return [[(val, x, y) for y, val in enumerate(row)]
                         for x, row in enumerate(self._arry)]
             if word.orientation == Orientation.UP:
-                return [[(self._arry[x][y], x, y) for x in range(SIZE) for y in range(SIZE)][i::SIZE] for i in range(SIZE)]
-            return [[(self._arry[x+i][y+i], x+i, y+i) for i in range(SIZE) if x+i < SIZE and y+i < SIZE] for x in range(SIZE) for y in range(SIZE)]
+                return [[(self._arry[x][y], x, y) for x in range(self.size) for y in range(self.size)][i::self.size] for i in range(self.size)]
+            return [[(self._arry[x+i][y+i], x+i, y+i) for i in range(self.size) if x+i < self.size and y+i < self.size] for x in range(self.size) for y in range(self.size)]
         def get_possible_positions(grid: list[list[Tuple[int,int,int]]]):
             for row in grid:
                 for y in range(len(row)):
                     start = y
                     end = start + word.length
-                    if end < len(row):
+                    if end <= len(row):
                         vals = row[start:end]
                         if len([val for i, val in enumerate(vals) if not val[0] or word.rendered[i] == val[0]]) == word.length:
                             yield [(val[1], val[2]) for val in vals]
-        if word.length > SIZE:
+        if word.length > self.size:
             raise ValueError
         possibilities = list(get_possible_positions(rotate_grid()))
         if not possibilities:
@@ -60,8 +61,8 @@ class Grid:
     def fill(self):
         """Fills empty spaces in the grid with random characters"""
         # pylint: disable=invalid-name
-        for x in range(SIZE):
-            for y in range(SIZE):
+        for x in range(self.size):
+            for y in range(self.size):
                 if not self._arry[x][y]:
                     self._arry[x][y] = random.choice(string.ascii_lowercase)
 
