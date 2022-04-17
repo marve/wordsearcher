@@ -4,6 +4,7 @@ This module houses the Grid class
 import random
 import string
 from typing import Final, Tuple
+from dupe_error import DupeError
 from fit_error import FitError
 from orientation import Orientation
 from word import Word
@@ -54,6 +55,8 @@ class Grid:
                             yield [(val[1], val[2]) for val in vals]
         if word.length > self.size:
             raise FitError
+        if [w for w in self.words if word.text.lower() == w.text.lower()]:
+            raise DupeError
         possibilities = list(get_possible_positions(rotate_grid()))
         if not possibilities:
             raise FitError
