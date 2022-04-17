@@ -37,7 +37,11 @@ class Grid:
                         for x, row in enumerate(self._arry)]
             if word.orientation == Orientation.UP:
                 return [[(self._arry[x][y], x, y) for x in range(self.size) for y in range(self.size)][i::self.size] for i in range(self.size)]
-            return [[(self._arry[x+i][y+i], x+i, y+i) for i in range(self.size) if x+i < self.size and y+i < self.size] for x in range(self.size) for y in range(self.size)]
+            # slice top left to bottom right
+            reg = [[(self._arry[x+i][y+i], x+i, y+i) for i in range(self.size) if x+i < self.size and y+i < self.size] for x in range(self.size) for y in range(self.size)]
+            # slice bottom left to top right
+            rev = [[(self._arry[x+i][y-i], x+i, y-i) for i in range(self.size) if x+i < self.size and y-i >= 0] for x in range(self.size) for y in range(self.size-1, 0, -1)]
+            return reg + rev
         def get_possible_positions(grid: list[list[Tuple[int,int,int]]]):
             for row in grid:
                 for y in range(len(row)):
