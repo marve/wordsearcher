@@ -1,6 +1,4 @@
-"""
-This module houses the Grid class
-"""
+"""This module houses the Grid class"""
 import random
 import string
 from typing import Final, Tuple

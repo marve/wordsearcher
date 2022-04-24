@@ -31,4 +31,4 @@ class Word:
 
     def __str__(self):
         # pylint: disable=line-too-long
-        return f'text={self.text} length={len(self.text)} orientation={self.orientation.name} reverse={self.reverse}' 
+        return f'text={self.text} length={len(self.text)} orientation={self.orientation.name} reverse={self.reverse}'

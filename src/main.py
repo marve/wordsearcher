@@ -1,11 +1,9 @@
-""" Python module that implements a word search generator """
-from grid_builder import GridBuilder
-from pdf_renderer import PdfRenderer
+"""Python module that implements a word search generator"""
+import grid_builder
+import pdf_renderer
 
 print('Word Search Generator')
-builder = GridBuilder()
-grid = builder.get_grid()
-renderer = PdfRenderer()
+grid = grid_builder.build()
 FILE = 'word-search.pdf'
 print(f'Writing grid as {FILE}')
-renderer.render(grid, FILE)
+pdf_renderer.render(grid, FILE)
