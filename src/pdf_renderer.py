@@ -2,15 +2,17 @@
 from fpdf import FPDF
 from grid import Grid
 
+FONT = 'Roboto Mono'
+FONT_PATH = '/workspaces/wordsearcher/fonts/roboto_mono/RobotoMono-VariableFont_wght.ttf'
+
 def render(grid: Grid, path: str):
     """Renders the word search as a PDF and writes to the given location"""
     pdf = FPDF()
     pdf.add_page()
-    font_path = '/workspaces/wordsearcher/fonts/roboto_mono/RobotoMono-VariableFont_wght.ttf'
-    pdf.add_font('Roboto Mono', '', font_path, uni = True)
-    pdf.set_font('Roboto Mono', '', 20)
+    pdf.add_font(FONT, '', FONT_PATH, uni = True)
+    pdf.set_font(FONT, '', 20)
     pdf.cell(w = 0, h = 10, txt = grid.title, align = 'C')
-    pdf.set_font('Roboto Mono', '', 16)
+    pdf.set_font(FONT, '', 16)
     top_gap = 31.5
     left_gap = 35
     row_height = 7.0
@@ -22,7 +24,7 @@ def render(grid: Grid, path: str):
             pdf.cell(w = cell_width, h = row_height, txt = char.upper(), align = 'C')
     pdf.rect(x = left_gap, y = 30, w = 141, h = 142.5, style = 'D')
 
-    pdf.set_font('Roboto Mono', '', 14)
+    pdf.set_font(FONT, '', 14)
     num_cols = 4
     top_gap = 182.5
     left_gap = 10
