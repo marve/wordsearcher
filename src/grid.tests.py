@@ -9,7 +9,6 @@ from word import Word
 
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-class-docstring
-# pylint: disable=invalid-name
 
 class GridTests(unittest.TestCase):
     def setUp(self):
