@@ -14,44 +14,53 @@ WORD_COUNT = 20
 
 def build():
     """Returns a word search grid"""
-    generate_grid = _get_generate_choice()
-    if not generate_grid:
-        title = input('Title: ')
-        grid = Grid(title)
-        for i in range(WORD_COUNT):
-            while True:
-                word = input(f'Word {i+1}: ')
-                if not _validate(word):
-                    continue
+    # pylint: disable=line-too-long
+    grids = []
+    while True:
+        generate_grid = _get_generate_choice()
+        if not generate_grid:
+            title = input('Title: ')
+            grid = Grid(title)
+            for i in range(WORD_COUNT):
+                while True:
+                    word = input(f'Word {i+1}: ')
+                    if not _validate(word):
+                        continue
+                    try:
+                        grid.add(Word(word, _get_orientation(), _get_direction()))
+                        break
+                    except FitError:
+                        print('Try another word or orientation')
+                        continue
+                    except DupeError:
+                        print(f'Choose a different word since "{word}" is already in the grid')
+                        continue
+        else:
+            word_dict = f'{os.path.dirname(__file__)}/../words_dictionary.json'
+            with open(word_dict, 'r', encoding='utf8') as word_file:
+                all_words = [k for k, _ in json.load(word_file).items() if len(k) <= MAX_WORD_LENGTH]
+            grid = Grid('Random Adventure')
+            word_choices = choices(all_words, k=100)
+            for word in word_choices:
+                orientation = _get_random_orientation()
+                reverse = _get_random_reverse()
                 try:
-                    grid.add(Word(word, _get_orientation(), _get_direction()))
-                    break
+                    _add_word(grid, Word(word, orientation, reverse))
                 except FitError:
-                    print('Try another word or orientation')
-                    continue
-                except DupeError:
-                    print(f'Choose a different word since "{word}" is already in the grid')
-                    continue
-    else:
-        word_dict = f'{os.path.dirname(__file__)}/../words_dictionary.json'
-        with open(word_dict, 'r', encoding='utf8') as word_file:
-            all_words = [k for k, _ in json.load(word_file).items() if len(k) <= MAX_WORD_LENGTH]
-        grid = Grid('Random Adventure')
-        word_choices = choices(all_words, k=100)
-        for word in word_choices:
-            orientation = _get_random_orientation()
-            reverse = _get_random_reverse()
-            try:
-                _add_word(grid, Word(word, orientation, reverse))
-            except FitError:
-                print('Trying a different word')
-            if len(grid.words) >= WORD_COUNT:
+                    print('Trying a different word')
+                if len(grid.words) >= WORD_COUNT:
+                    break
+        if len(grid.words) != WORD_COUNT:
+            print(f'ERROR: Expected {WORD_COUNT} words in grid but actually have {len(grid.words)}')
+            raise ValueError
+        grid.fill()
+        grids.append(grid)
+        match input(f'You have made {len(grids)} word search{"es" if len(grids) > 1 else ""}. Do you want to make another? [Y]es, [N]o: ').lower():
+            case 'n':
                 break
-    if len(grid.words) != WORD_COUNT:
-        print(f'ERROR: Expected {WORD_COUNT} words in grid but actually have {len(grid.words)}')
-        raise ValueError
-    grid.fill()
-    return grid
+            case _:
+                continue
+    return grids
 
 def _get_random_orientation():
     """Get a random orientation value"""
