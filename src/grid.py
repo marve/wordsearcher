@@ -14,7 +14,7 @@ class Grid:
     def __init__(self, title: str, size: int = DEFAULT_SIZE):
         self.title = title
         self.size = size
-        self._arry: list[list[str]] = [[None for y in range(size)] for x in range(size)]
+        self._arry: list[list[None]] = [[None for y in range(size)] for x in range(size)]
         self._words: list[Word] = []
 
     @property

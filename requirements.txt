@@ -1,2 +1,4 @@
 fpdf
+types-fpdf2
 coverage
+Flask

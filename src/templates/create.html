@@ -1,0 +1,14 @@
+<!doctype html>
+<title>WordSearcher</title>
+<h1>Choose 20 words</h1>
+<form method="POST">
+  {% for i in range(20) %}
+    <div>
+          <label style="width: 20px; display: inline-block;" for="i{{ loop.index }}">
+        {{ loop.index }}.
+      </label>
+      <input type="text" name="{{ loop.index }}" />
+    </div>
+  {% endfor %}
+  <button type="submit">Create</button>
+</form>
