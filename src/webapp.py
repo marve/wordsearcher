@@ -51,4 +51,4 @@ def generate():
 def _pdf_response(grid: Grid):
     grid.fill()
     pdf = pdf_renderer.render_string(grid).encode("latin1")
-    Response(pdf, status=200, mimetype='application/pdf')
+    return Response(pdf, status=200, mimetype='application/pdf')
