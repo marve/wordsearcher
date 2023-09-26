@@ -9,6 +9,7 @@ from grid_builder import _get_random_orientation
 from grid_builder import _get_random_reverse
 from grid_builder import WORD_COUNT
 import pdf_renderer
+import re
 
 app = Flask(__name__)
 
@@ -27,6 +28,7 @@ def custom_create():
     """Creates and returns a PDF wordsearch using the given words"""
     grid = Grid('Custom Adventure')
     for _, (_, word) in enumerate(request.form.items()):
+        word = re.sub(r'[^a-zA-Z]', '', word)
         orientation = _get_random_orientation()
         reverse = _get_random_reverse()
         _add_word(grid, Word(word, orientation, reverse))

@@ -1,4 +1,5 @@
 """This module houses the logic for building a word search grid"""
+import re
 from dupe_error import DupeError
 from fit_error import FitError
 from grid import Grid
@@ -23,6 +24,7 @@ def build():
             for i in range(WORD_COUNT):
                 while True:
                     word = input(f'Word {i+1}: ')
+                    word = re.sub(r'[^a-zA-Z]', '', word)
                     if not _validate(word):
                         continue
                     try:
