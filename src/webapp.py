@@ -1,4 +1,5 @@
 """Python Flask web application that can build a wordsearch"""
+import re
 from flask import Flask, render_template, request, Response
 from fit_error import FitError
 from grid import Grid
@@ -9,7 +10,6 @@ from grid_builder import _get_random_orientation
 from grid_builder import _get_random_reverse
 from grid_builder import WORD_COUNT
 import pdf_renderer
-import re
 
 app = Flask(__name__)
 
