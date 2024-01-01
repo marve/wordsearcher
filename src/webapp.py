@@ -29,6 +29,8 @@ def custom_create():
     grid = Grid('Custom Adventure')
     for _, (_, word) in enumerate(request.form.items()):
         word = re.sub(r'[^a-zA-Z]', '', word)
+        if not word:
+            continue
         orientation = _get_random_orientation()
         reverse = _get_random_reverse()
         _add_word(grid, Word(word, orientation, reverse))
