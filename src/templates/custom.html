@@ -4,10 +4,10 @@
 <form method="POST" action="/custom">
   {% for i in range(20) %}
     <div>
-          <label style="width: 20px; display: inline-block;" for="i{{ loop.index }}">
+      <label style="width: 20px; display: inline-block;" for="i{{ loop.index }}">
         {{ loop.index }}.
       </label>
-      <input type="text" name="{{ loop.index }}" />
+      <input type="text" name="{{ loop.index }}" maxlength="16" />
     </div>
   {% endfor %}
   <button type="submit">Create</button>
