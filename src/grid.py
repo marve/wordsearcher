@@ -1,7 +1,7 @@
 """This module houses the Grid class"""
 import random
 import string
-from typing import Final, Tuple
+from typing import Final, Optional, Tuple
 from dupe_error import DupeError
 from fit_error import FitError
 from orientation import Orientation
@@ -14,7 +14,7 @@ class Grid:
     def __init__(self, title: str, size: int = DEFAULT_SIZE):
         self.title = title
         self.size = size
-        self._arry: list[list[None]] = [[None for y in range(size)] for x in range(size)]
+        self._arry: list[list[Optional[str]]] = [[None for y in range(size)] for x in range(size)]
         self._words: list[Word] = []
 
     @property
