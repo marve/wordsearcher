@@ -1,14 +1,23 @@
 <!doctype html>
 <title>WordSearcher</title>
-<h1>Choose up to 20 words</h1>
+<h1>Choose up to 15 words</h1>
 <form method="POST" action="/custom">
-  {% for i in range(20) %}
+  <p>
+    <label>
+      Title
+    </label>
+    <br />
+    <input type="text" name="title" maxlength="25" />
+  </p>
+  {% for i in range(15) %}
     <div>
       <label style="width: 20px; display: inline-block;" for="i{{ loop.index }}">
         {{ loop.index }}.
       </label>
-      <input type="text" name="{{ loop.index }}" maxlength="16" />
+      <input type="text" name="{{ loop.index }}" maxlength="10" />
     </div>
   {% endfor %}
-  <button type="submit">Create</button>
+  <p>
+    <button type="submit">Create</button>
+  </p>
 </form>

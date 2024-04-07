@@ -26,9 +26,12 @@ def custom_form():
 @app.post("/custom")
 def custom_create():
     """Creates and returns a PDF wordsearch using the given words"""
-    grid = Grid('Custom Adventure')
-    for _, (_, word) in enumerate(request.form.items()):
-        word = re.sub(r'[^a-zA-Z]', '', word)
+    title = str(request.form['title'])[:25]
+    grid = Grid(title)
+    for _, (name, word) in enumerate(request.form.items()):
+        if name == 'title':
+            continue
+        word = re.sub(r'[^a-zA-Z]', '', word)[:10]
         if not word:
             continue
         orientation = _get_random_orientation()
