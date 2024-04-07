@@ -3,14 +3,14 @@ import json
 import os
 from random import choices
 from string import ascii_lowercase
-from typing import Optional
+from typing import Final, Optional
 from fit_error import FitError
 from grid import Grid
 from orientation import Orientation
 from word import Word
 
-MAX_WORD_LENGTH = 15
-WORD_COUNT = 20
+MAX_WORD_LENGTH: Final = 10
+WORD_COUNT: Final = 15
 
 def build(num: Optional[int] = None, words: Optional[list[str]] = None):
     """Returns a word search grid"""

@@ -7,7 +7,7 @@ from fit_error import FitError
 from orientation import Orientation
 from word import Word
 
-DEFAULT_SIZE: Final = 20
+DEFAULT_SIZE: Final = 16
 
 class Grid:
     """Class that represents a word search grid"""

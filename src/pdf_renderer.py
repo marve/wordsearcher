@@ -24,26 +24,27 @@ def render_file(grids: list[Grid], path: str):
 def _add_page(grid: Grid, pdf: FPDF):
     pdf.add_page()
     pdf.add_font(FONT_NAME, '', FONT_FILE, uni = True)
-    pdf.set_font(FONT_NAME, '', 24)
+    pdf.set_font(FONT_NAME, '', 30)
     pdf.cell(w = 0, h = 0, txt = grid.title, align = 'C')
-    pdf.set_font(FONT_NAME, '', 20)
+    pdf.set_font(FONT_NAME, '', 26)
     top_gap = 17.0
-    left_gap = 5.0
-    row_height = 10.0
-    cell_width = row_height
+    left_gap = 15.0
+    row_height = 13.4 
+    cell_width = 11.25
+
 
     for i, row in enumerate(grid.arry):
         pdf.set_xy(x = left_gap, y = (row_height * i) + top_gap)
         for char in row:
             pdf.cell(w = cell_width, h = row_height, txt = char.upper(), align = 'C')
-    pdf.rect(x = left_gap, y = 15.5, w = 200, h = 202.5, style = 'D')
+    pdf.rect(x = left_gap, y = 15.5, w = 180, h = 216, style = 'D')
 
     pdf.set_font(FONT_NAME, '', 21)
     num_cols = 3
-    top_gap = 218.5
-    left_gap = 5
+    top_gap = 235.2
+    left_gap = 15
     row_height = 8.35
-    cell_width = 70
+    cell_width = 67
     word_table = [grid.words[i:i+num_cols] for i in range(0,len(grid.words),num_cols)]
     for i, row in enumerate(word_table):
         pdf.set_xy(x = left_gap, y = (row_height * i) + top_gap)
